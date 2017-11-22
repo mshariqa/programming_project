@@ -4,11 +4,14 @@ from summary import summary
 from graph import graph
 from historicaldata import historicaldata
 from prediction import prediction
+import subprocess as sp
 
+def cls(): 
+	tmp = sp.call('cls',shell = True)
 
 def menu2(comindex):
+	#cls()
 	loop = True
-
 	while loop:
 		print("Watch options:")
 		print("1. Summary")
@@ -35,6 +38,8 @@ def menu2(comindex):
 			print("Wrong option. Try again ...")
 
 def name():
+	cls()
+	#TODO Name search is not working 
 	companylist = pd.read_csv("http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchan0ge=nasdaq&render=download")
 	companyName = input("Enter the company name you want to search:")
 
@@ -49,8 +54,8 @@ def name():
 		companyName = input("Enter the company name you want to search:")
 		outlen = len(companylist[companylist['Name'].str.match(companyName,case = False)])
 	print(companyName)
-	print(companylist[companylist['Symbol'].str.match(companyName,case = False)])
-	#print(companylist.dtypes)
+	print(companylist[companylist['Name'].str.match(companyName,case = False)])
+	#print(companylist.dtypes)	
 	comindex = input("Enter the index number of the company you want:")
 	print("You selected :")
 	print((companylist.iloc[int(comindex)]))
@@ -59,28 +64,35 @@ def name():
 
 
 def ticker():
+	cls()
 	companylist = pd.read_csv("http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchan0ge=nasdaq&render=download")
 	companyTicker = input("Enter the company ticker you want to search:")
 
-	outlen = len(companylist[companylist['Symbol'].str.match(companyTicker,case = False)])
+	matchTicker = companylist[companylist['Symbol'].str.match(companyTicker,case = False)]
+	outlen = len(matchTicker)
+	
 	while(outlen <= 1):
 		print("No result found. Please try again ...")
 		companyTicker = input("Enter the company ticker you want to search:")
-		outlen = len(companylist[companylist['Symbol'].str.match(companyTicker,case = False)])
+		matchTicker = companylist[companylist['Symbol'].str.match(companyTicker,case = False)]
+		outlen = len(matchTicker)
 
 	while(outlen > 20):
 		print("The matching patterns are more than 20. Please enter more characters...")
 		companyTicker = input("Enter the company ticker you want to search:")
-		outlen = len(companylist[companylist['Symbol'].str.match(companyTicker,case = False)])
+		matchTicker = companylist[companylist['Symbol'].str.match(companyTicker,case = False)] 
+		outlen = len(matchTicker)
 	
-	print(companylist[companylist['Symbol'].str.match(companyTicker,case = False)])
+	print(matchTicker)
 	#print(companylist.dtypes)
 	comindex = input("Enter the index number of the company you want:")
+	#TODO - Add code to check if the index is proper
 	print("You selected :")
 	print((companylist.iloc[int(comindex)]))
 	menu2(comindex)
 
 def menu():
+	cls()
 	loop = True
 	while loop:
 		print("Search stock using:")
