@@ -1,4 +1,8 @@
 #programming project
+#Isha Srivastava-1720133
+#Mohammad Shariq Azam-17202383
+#Aman Thakur-
+
 import pandas as pd
 from summary import summary
 from graph import graph
