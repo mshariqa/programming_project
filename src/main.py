@@ -13,7 +13,7 @@ import subprocess as sp
 def cls(): 
 	tmp = sp.call('cls',shell = True)
 
-def menu2(comindex):
+def menu2(companylist,comindex):
 	#cls()
 	loop = True
 	while loop:
@@ -26,13 +26,13 @@ def menu2(comindex):
 		print("6. Exit")
 		option = input("Your option: ")
 		if option == '1':
-			summary(comindex)
+			summary(companylist,comindex)
 		elif option == '2':	
-			graph(comindex),
+			graph(companylist,comindex),
 		elif option == '3':	
-			historicaldata(comindex),
+			historicaldata(companylist,comindex),
 		elif option == '4':	
-			prediction(comindex),
+			prediction(companylist,comindex),
 		elif option == '5':	
 			menu()
 		elif option == '6':	
@@ -64,7 +64,7 @@ def name():
 	print("You selected :")
 	print((companylist.iloc[int(comindex)]))
 	#print((companylist.loc[int(comindex)]))
-	menu2(comindex)
+	menu2(companylist,comindex)
 
 
 def ticker():
@@ -75,7 +75,7 @@ def ticker():
 	matchTicker = companylist[companylist['Symbol'].str.match(companyTicker,case = False)]
 	outlen = len(matchTicker)
 	
-	while(outlen <= 1):
+	while(outlen < 1):
 		print("No result found. Please try again ...")
 		companyTicker = input("Enter the company ticker you want to search:")
 		matchTicker = companylist[companylist['Symbol'].str.match(companyTicker,case = False)]
@@ -93,7 +93,7 @@ def ticker():
 	#TODO - Add code to check if the index is proper
 	print("You selected :")
 	print((companylist.iloc[int(comindex)]))
-	menu2(comindex)
+	menu2(companylist,comindex)
 
 def menu():
 	cls()
