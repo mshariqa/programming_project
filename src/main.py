@@ -14,10 +14,13 @@ def cls():
 	tmp = sp.call('cls',shell = True)
 
 def menu2(companylist,comindex):
-	#cls()
+	cls()
+	print("You selected :")
+	print((companylist.iloc[int(comindex)]))
+	print("*" * 80)
 	loop = True
 	while loop:
-		print("Watch options:")
+		print("Select options:")
 		print("1. Summary")
 		print("2. Graph")
 		print("3. Historical Data")
@@ -48,7 +51,7 @@ def name():
 	companyName = input("Enter the company name you want to search:")
 
 	outlen = len(companylist[companylist['Name'].str.match(companyName,case = False)])
-	while(outlen <= 1):
+	while(outlen < 1):
 		print("No result found. Please try again ...")
 		companyName = input("Enter the company name you want to search:")
 		outlen = len(companylist[companylist['Name'].str.match(companyName,case = False)])
@@ -75,7 +78,7 @@ def ticker():
 	matchTicker = companylist[companylist['Symbol'].str.match(companyTicker,case = False)]
 	outlen = len(matchTicker)
 
-	while(outlen <= 1):
+	while(outlen < 1):
 		print("No result found. Please try again ...")
 		companyTicker = input("Enter the company ticker you want to search:")
 		matchTicker = companylist[companylist['Symbol'].str.match(companyTicker,case = False)]

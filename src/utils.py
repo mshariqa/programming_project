@@ -31,3 +31,19 @@ def get_date():
         except ValueError:
            print("Invalid format")
     return from_dte, to_dte
+
+def check_date_after():
+    while True:
+        try:
+            pred_date = input("Please enter the pred date in format dd-mon-yy. ie 20-Feb-17: ")
+            pred_dte = datetime.strptime(pred_date,'%d-%b-%y')
+            cur_dte =  datetime.strptime(str(date.today()),'%Y-%m-%d')
+            if pred_dte < cur_dte:
+                print("Prediction date cannot be before today's date.")
+            else:
+              break
+
+        except ValueError:
+               print("Invalid format")
+               break
+    return pred_dte
