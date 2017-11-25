@@ -1,10 +1,6 @@
 #Author : Aman Thakur
 
 import pandas as pd
-#from summary import summary
-#from graph import graph
-#from historicaldata import historicaldata
-#from prediction import prediction
 import subprocess as sp
 
 def mean_price(n, companydata):
@@ -20,7 +16,7 @@ def std_dev(companydata):
     diff = [x - mean for x in m]
     sq_diff = [d*d for d in diff]
     ssd = sum(sq_diff)    
-    return (ssd/num_items)**(1/2)
+    return (ssd/num_items)**(1/2)    
 
 def summary(companylist, comindex):
 
@@ -37,7 +33,7 @@ def summary(companylist, comindex):
     print("Yesterday's Low Price:                      " + str(today_low))  
     today_vol = companydata.at[0,'Volume']
     print("Yesterday's Volume Traded:                  " + str(today_vol))
-    print("\n***Descriptive Statistics:*")
+    print("\n**Descriptive Statistics:**")
     print("7 Day Mean Close Price:                     " + str(mean_price(7, companydata)))
     print("30 Day Mean Close Price:                    " + str(mean_price(30, companydata)))
     quartiles = companydata.Close.quantile([0.25, 0.50, 0.75, 1])
@@ -48,4 +44,7 @@ def summary(companylist, comindex):
     print("Range of Closing Price (Annual):            " + str(companydata['Close'].max() - companydata['Close'].min()))
     print("Standard Deviation in Close Price (Annual): " + str(std_dev(companydata)))
     print("Coefficient of Variation (Annual):          " + str(std_dev(companydata)/mean_price(len(companydata['Close']), companydata)))
+    stock_return = ((companydata.at[0,'Close'] - companydata.at[1,'Close'])/companydata.at[1,'Close'])*100
+    print("Stock Return % (Last Close Price):          " + str(stock_return))
     print("*"*80)
+    print(" ")

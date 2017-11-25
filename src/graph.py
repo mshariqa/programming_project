@@ -11,7 +11,7 @@ def graph(companylist, comindex):
 	print("="*20,"Graph Screen","="*20)
 	while True:
 		utils.cls()
-		print("\nSelect options			:")
+		print("\nSelect option:")
 		print("1. Last 7 days")
 		print("2. Last 1 month")
 		print("3. Last 3 months")
@@ -19,7 +19,7 @@ def graph(companylist, comindex):
 		print("5. Last 1 year")
 		print("6. Go back to previous menu")
 		print("7. Exit\n")
-		option = input("Your options 		: ")
+		option = input("Your option 		                        : ")
 		if option == '1':
 			step = timedelta(days=7)
 			break
@@ -54,11 +54,11 @@ def graph(companylist, comindex):
 	print("\n")
 	print("="*20,"Time series option(Price/Volume)","="*20)
 	while True:
-		print("\nSelect options for time series : ")
+		print("\nSelect options for time series: ")
 		print("1. Time series for close price ")
 		print("2. Time series for volume ")
 		print("3. Exit ")
-		option2 = input("\nYour option: ")
+		option2 = input("\nYour option                                     : ")
 		try: 
 			if option2 == '1':
 				N = input("\nEnter the window in integer for moving averages : ")
@@ -77,7 +77,7 @@ def graph(companylist, comindex):
 					tsw = company_details['Close']
 					break
 			elif option2 == '3':
-				print("\nThanks for coming. Please visit again ...")
+				print("\nThanks for coming. Please visit again ...\n")
 				exit()
 			else:
 				print("\nWrong option. Try again ...")
@@ -85,9 +85,11 @@ def graph(companylist, comindex):
 			print("\nIncorrect Format!! Please try again ... ")
 
 	cur_dte = date.today()
-	#converting current date from datetime to string
+	#converting date from datetime to string
 	cur_date = datetime.strftime(cur_dte, '%Y-%m-%d')
+	#from date = current date - step
 	from_dte = cur_dte - step
+	#converting date from datetime to string
 	from_date = datetime.strftime(from_dte, '%Y-%m-%d')
 	ts = ts[from_date:cur_date]
 	tsw = tsw[from_date:cur_date]
@@ -106,23 +108,21 @@ def graph(companylist, comindex):
 	plt.plot(ts, color='blue',label='Original')
 	plt.plot(rolmean, color='red',label='Rolling Mean')
 	plt.plot(wrolmean['Time'],wrolmean['Roll'], color='green',label='Weighted Rolling Mean')	
-	print(option2)
-	if option2 == 1:
+	if option2 == '1':
 		plt.title('Time Series plot for price')
 		plt.ylabel('Price')
-	elif option2 == 2:
+	elif option2 == '2':
 		plt.title('Time Series plot for volume')
 		plt.ylabel('Volume')
 	plt.xlabel('Time')
 	plt.legend(loc='upper left')
 	plt.figure(1)
 	plt.subplot(212)
-	if option2 == 1:
-		plt.title('Time Series plot for price')
+	if option2 == '1':
 		plt.ylabel('Price')
-	elif option2 == 2:
-		plt.title('Time Series plot for volume')
+	elif option2 == '2':
 		plt.ylabel('Volume')
+	plt.xlabel('Time')
 	plt.plot(rolstd, color='black',label='Rolling Standard')
 	plt.plot(px['MACD'], color='green',label='MACD')
 	plt.legend(loc='upper left')
