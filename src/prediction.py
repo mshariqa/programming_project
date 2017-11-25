@@ -9,12 +9,14 @@ import utils
 
 def prediction(companylist,comindex):
 	utils.cls()
-	print("="*20,"Prediction Screen","="*20)
-	print("\n\n")
+	print("\n"+"="*23+"Prediction Screen"+"="*23)
 	tickerName = companylist.iloc[int(comindex)].Symbol
 	company_details = pd.read_csv("https://www.google.com/finance/historical?output=csv&q={}".format(tickerName))
+	#get the value of from and to date from user
 	from_dte, to_dte = utils.get_date()
+	#intialized step as single day
 	step = timedelta(days=1)
+	#initializing X_train and y_train as numpy array
 	X_train = np.array([])
 	y_train = np.array([])
 	while(from_dte <= to_dte):
@@ -26,6 +28,7 @@ def prediction(companylist,comindex):
 		from_dte += step
 	n = len(X_train)
 	X_train = np.reshape(X_train,(n,1))
+	#Training linear regression using X_train and y_train 
 	regressor = LinearRegression()
 	regressor.fit(X_train, y_train)
 
@@ -39,6 +42,8 @@ def prediction(companylist,comindex):
 	try:
 		X_test = utils.check_date_after().toordinal() 
 		y_pred = regressor.predict(X_test)
-		print("The predicted price for this date is : {}".format(y_pred))
+		if float(y_pred) < 0:
+			y_pred = 0
+		print("\nThe predicted price for this date is : {}".format(y_pred))
 	except ValueError:
-		print("Entered value is not in format dd-mmm-yy. Please try again ... ")
+		print("\nEntered value is not in format dd-mmm-yy. Please try again ... ")

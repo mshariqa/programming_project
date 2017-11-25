@@ -2,15 +2,15 @@
 
 from datetime import datetime, timedelta, date
 import subprocess as sp
-
+#Clear the console screen
 def cls():
   tmp = sp.call('cls',shell = True)
 
-
+#Get to and from date in dd-mon-yy format
 def get_date():
     while True:
         try:
-            from_date = input("Please enter the From date in format dd-mon-yy. ie 20-Feb-17: ")
+            from_date = input("\nPlease enter the From date in format dd-mon-yy. ie 20-Feb-17: ")
             from_dte = datetime.strptime(from_date,'%d-%b-%y')
             cur_dte =  datetime.strptime(str(date.today()),'%Y-%m-%d')
             if from_dte > cur_dte:
@@ -44,7 +44,7 @@ def get_date():
 def check_date_after():
     while True:
         try:
-            pred_date = input("\nPlease enter the prediction date in format dd-mon-yy. ie 20-Feb-18: ")
+            pred_date = input("Please enter the prediction date in format dd-mon-yy. ie 20-Feb-18: ")
             pred_dte = datetime.strptime(pred_date,'%d-%b-%y')
             cur_dte =  datetime.strptime(str(date.today()),'%Y-%m-%d')
             if pred_dte < cur_dte:
@@ -54,5 +54,4 @@ def check_date_after():
 
         except ValueError:
                print("\nInvalid format: Please try again ...")
-               break
     return pred_dte
