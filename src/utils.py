@@ -14,7 +14,7 @@ def get_date():
 
         except ValueError:
                print("Invalid format")
-               break
+
 
     while True:
         try:
@@ -30,6 +30,7 @@ def get_date():
 
         except ValueError:
            print("Invalid format")
+           
     return from_dte, to_dte
 
 def check_date_after():

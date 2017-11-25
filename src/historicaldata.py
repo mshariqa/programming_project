@@ -1,8 +1,9 @@
 import utils
 import pandas as pd
 from datetime import datetime, timedelta, date
+#from main import menu, menu2
 
-def summary(step):
+def summary(step, company_details):
     df2 = pd.DataFrame()
     from_dte,to_dte= utils.get_date()
     while(from_dte <= to_dte):
@@ -16,7 +17,7 @@ def summary(step):
     else:
         print(" "* 20,"History:\n", df2)
 
-def summary_monthly():
+def summary_monthly(company_details):
     df2 = pd.DataFrame()
     df_summary = pd.DataFrame()
     step = timedelta(days=1)
@@ -41,31 +42,36 @@ def summary_monthly():
     else:
         print(" "* 15,"Monthly history:\n", df_summary)
 
-def freq_menu():
+def freq_menu(company_details):
     loop = True
     while loop:
         print("Please enter the Frequecy option for viewing Historical Data:")
         print("1. Daily")
         print("2. Weekly")
         print("3. Monthly")
-        print("4. Exit")
+        print("4. Go back to previous menu")
+        print("5. Exit")
         option = input("Your option: ")
         if option == '1':
             step = timedelta(days=1),
-            summary(step)
+            summary(step,company_details)
         elif option == '2':
             step = timedelta(days=7),
-            summary(step)
+            summary(step,company_details)
         elif option == '3':
             step = timedelta(days=30),
-            summary_monthly()
+            summary_monthly(company_details)
         elif option == '4':
+            return
+        elif option == '5':
             print("Thanks for coming. Please visit again...")
+            loop = False
             exit()
         else:
             print("Wrong option. Try again...")
 
-def historicaldata(companylist,comindex)
+def historicaldata(companylist,comindex):
     ticker = companylist.iloc[int(comindex)].Symbol
     company_details = pd.read_csv("https://www.google.com/finance/historical?output=csv&q={}".format(ticker))
-    freq_menu()
+    #print(company_details.head())
+    freq_menu(company_details)

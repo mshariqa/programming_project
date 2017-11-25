@@ -1,11 +1,11 @@
 #programming project
 #Isha Srivastava-1720133
 #Mohammad Shariq Azam-17202383
-#Aman Thakur-
+#Aman Thakur-17200128
 
 import pandas as pd
 from summary import summary
-from graph import graph
+#from graph import graph
 from historicaldata import historicaldata
 from prediction import prediction
 import subprocess as sp
@@ -40,9 +40,11 @@ def menu2(companylist,comindex):
 			menu()
 		elif option == '6':
 			print("Thanks for coming. Please visit again ...")
+			loop = False
 			exit()
 		else:
 			print("Wrong option. Try again ...")
+
 
 def name():
 	cls()
@@ -50,24 +52,32 @@ def name():
 	companylist = pd.read_csv("http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchan0ge=nasdaq&render=download")
 	companyName = input("Enter the company name you want to search:")
 
-	outlen = len(companylist[companylist['Name'].str.match(companyName,case = False)])
+	outlen = len(companylist[companylist['Name'].str.contains(companyName,case = False)])
 	while(outlen < 1):
 		print("No result found. Please try again ...")
 		companyName = input("Enter the company name you want to search:")
-		outlen = len(companylist[companylist['Name'].str.match(companyName,case = False)])
+		outlen = len(companylist[companylist['Name'].str.contains(str(companyName),case = False)])
 
 	while(outlen > 20):
 		print("The matching patterns are more than 20. Please enter more characters...")
 		companyName = input("Enter the company name you want to search:")
-		outlen = len(companylist[companylist['Name'].str.match(companyName,case = False)])
+		outlen = len(companylist[companylist['Name'].str.contains(companyName,case = False)])
 	print(companyName)
-	print(companylist[companylist['Name'].str.match(companyName,case = False)])
+	temp_match = companylist[companylist['Name'].str.contains(companyName,case = False)]
+	print(temp_match)
 	#print(companylist.dtypes)
-	comindex = input("Enter the index number of the company you want:")
-	print("You selected :")
-	print((companylist.iloc[int(comindex)]))
-	#print((companylist.loc[int(comindex)]))
-	menu2(companylist,comindex)
+
+	loop = True
+	while loop:
+		comindex = int(input("Enter the index number of the company you want:"))
+		if temp_match.index.contains(comindex):
+			loop = False
+			print("You selected :")
+			print((companylist.iloc[int(comindex)]))
+			#print((companylist.loc[int(comindex)]))
+			menu2(companylist,comindex)
+		else:
+			print("The name you have entered is not found. Please try again...")
 
 
 def ticker():
@@ -75,28 +85,35 @@ def ticker():
 	companylist = pd.read_csv("http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchan0ge=nasdaq&render=download")
 	companyTicker = input("Enter the company ticker you want to search:")
 
-	matchTicker = companylist[companylist['Symbol'].str.match(companyTicker,case = False)]
+	matchTicker = companylist[companylist['Symbol'].str.contains(companyTicker,case = False)]
 	outlen = len(matchTicker)
 
 	while(outlen < 1):
 		print("No result found. Please try again ...")
 		companyTicker = input("Enter the company ticker you want to search:")
-		matchTicker = companylist[companylist['Symbol'].str.match(companyTicker,case = False)]
+		matchTicker = companylist[companylist['Symbol'].str.contains(companyTicker,case = False)]
 		outlen = len(matchTicker)
 
 	while(outlen > 20):
 		print("The matching patterns are more than 20. Please enter more characters...")
 		companyTicker = input("Enter the company ticker you want to search:")
-		matchTicker = companylist[companylist['Symbol'].str.match(companyTicker,case = False)]
+		matchTicker = companylist[companylist['Symbol'].str.contains(companyTicker,case = False)]
 		outlen = len(matchTicker)
 
-	print(matchTicker)
-	#print(companylist.dtypes)
-	comindex = input("Enter the index number of the company you want:")
-	#TODO - Add code to check if the index is proper
-	print("You selected :")
-	print((companylist.iloc[int(comindex)]))
-	menu2(companylist,comindex)
+	print(companyTicker)
+	temp_match = companylist[companylist['Symbol'].str.contains(companyTicker,case = False)]
+	print(temp_match)
+
+	loop = True
+	while loop:
+		comindex = int(input("Enter the index number of the company you want:"))
+		if temp_match.index.contains(comindex):
+			loop = False
+			print("You selected :")
+			print((companylist.iloc[int(comindex)]))
+			menu2(companylist,comindex)
+		else:
+			print("The ticker you have entered is not found. Please try again...")
 
 def menu():
 	cls()
@@ -113,6 +130,7 @@ def menu():
 			ticker(),
 		elif option == '3':
 			print("Thanks for coming. Please visit again ...")
+			loop = False
 			exit()
 		else:
 			print("Wrong option. Try again ...")
