@@ -1,6 +1,11 @@
 #Author: Isha Srivastava
 
 from datetime import datetime, timedelta, date
+import subprocess as sp
+
+def cls():
+  tmp = sp.call('cls',shell = True)
+
 
 def get_date():
     while True:

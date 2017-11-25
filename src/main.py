@@ -5,21 +5,19 @@
 
 import pandas as pd
 from summary import summary
-#from graph import graph
+from graph import graph
 from historicaldata import historicaldata
 from prediction import prediction
-import subprocess as sp
-
-def cls():
-	tmp = sp.call('cls',shell = True)
+import utils
 
 def menu2(companylist,comindex):
-	cls()
-	print("You selected :")
-	print((companylist.iloc[int(comindex)]))
+	utils.cls()	
 	print("*" * 80)
 	loop = True
 	while loop:
+		print("You selected :")
+		print((companylist.iloc[int(comindex)]))
+		print("*" * 80)
 		print("Select options:")
 		print("1. Summary")
 		print("2. Graph")
@@ -27,7 +25,7 @@ def menu2(companylist,comindex):
 		print("4. Future Prediction")
 		print("5. Go back to previous menu")
 		print("6. Exit")
-		option = input("Your option: ")
+		option = input("Your option: ").lstrip()
 		if option == '1':
 			summary(companylist,comindex)
 		elif option == '2':
@@ -47,21 +45,22 @@ def menu2(companylist,comindex):
 
 
 def name():
-	cls()
-	#TODO Name search is not working
+	utils.cls()
 	companylist = pd.read_csv("http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchan0ge=nasdaq&render=download")
-	companyName = input("Enter the company name you want to search:")
+	companyName = input("Enter the company name you want to search:").lstrip()
 
 	outlen = len(companylist[companylist['Name'].str.contains(companyName,case = False)])
-	while(outlen < 1):
-		print("No result found. Please try again ...")
-		companyName = input("Enter the company name you want to search:")
-		outlen = len(companylist[companylist['Name'].str.contains(str(companyName),case = False)])
 
-	while(outlen > 20):
-		print("The matching patterns are more than 20. Please enter more characters...")
-		companyName = input("Enter the company name you want to search:")
-		outlen = len(companylist[companylist['Name'].str.contains(companyName,case = False)])
+	while(outlen > 20 or outlen < 1):
+		if outlen < 1:
+			print("No result found. Please try again ...")
+			companyName = input("Enter the company name you want to search:").lstrip()
+			outlen = len(companylist[companylist['Name'].str.contains(str(companyName),case = False)])		
+		elif outlen > 20:
+			print("The matching patterns are more than 20. Please enter more characters...")
+			companyName = input("Enter the company name you want to search:").lstrip()
+			outlen = len(companylist[companylist['Name'].str.contains(companyName,case = False)])
+
 	print(companyName)
 	temp_match = companylist[companylist['Name'].str.contains(companyName,case = False)]
 	print(temp_match)
@@ -69,36 +68,33 @@ def name():
 
 	loop = True
 	while loop:
-		comindex = int(input("Enter the index number of the company you want:"))
+		comindex = int(input("Enter the index number of the company you want:").lstrip())
 		if temp_match.index.contains(comindex):
 			loop = False
-			print("You selected :")
-			print((companylist.iloc[int(comindex)]))
-			#print((companylist.loc[int(comindex)]))
 			menu2(companylist,comindex)
 		else:
 			print("The name you have entered is not found. Please try again...")
 
 
 def ticker():
-	cls()
+	utils.cls()
 	companylist = pd.read_csv("http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchan0ge=nasdaq&render=download")
-	companyTicker = input("Enter the company ticker you want to search:")
+	companyTicker = input("Enter the company ticker you want to search:").lstrip()
 
 	matchTicker = companylist[companylist['Symbol'].str.contains(companyTicker,case = False)]
 	outlen = len(matchTicker)
 
-	while(outlen < 1):
-		print("No result found. Please try again ...")
-		companyTicker = input("Enter the company ticker you want to search:")
-		matchTicker = companylist[companylist['Symbol'].str.contains(companyTicker,case = False)]
-		outlen = len(matchTicker)
-
-	while(outlen > 20):
-		print("The matching patterns are more than 20. Please enter more characters...")
-		companyTicker = input("Enter the company ticker you want to search:")
-		matchTicker = companylist[companylist['Symbol'].str.contains(companyTicker,case = False)]
-		outlen = len(matchTicker)
+	while(outlen > 20 or outlen < 1):
+		if outlen < 1:
+			print("No result found. Please try again ...")
+			companyTicker = input("Enter the company ticker you want to search:").lstrip()
+			matchTicker = companylist[companylist['Symbol'].str.contains(companyTicker,case = False)]
+			outlen = len(matchTicker)		
+		elif outlen > 20:
+			print("The matching patterns are more than 20. Please enter more characters...")
+			companyTicker = input("Enter the company ticker you want to search:").lstrip()
+			matchTicker = companylist[companylist['Symbol'].str.contains(companyTicker,case = False)]
+			outlen = len(matchTicker)
 
 	print(companyTicker)
 	temp_match = companylist[companylist['Symbol'].str.contains(companyTicker,case = False)]
@@ -106,24 +102,22 @@ def ticker():
 
 	loop = True
 	while loop:
-		comindex = int(input("Enter the index number of the company you want:"))
+		comindex = int(input("Enter the index number of the company you want:").lstrip())
 		if temp_match.index.contains(comindex):
 			loop = False
-			print("You selected :")
-			print((companylist.iloc[int(comindex)]))
 			menu2(companylist,comindex)
 		else:
 			print("The ticker you have entered is not found. Please try again...")
 
 def menu():
-	cls()
+	utils.cls()
 	loop = True
 	while loop:
 		print("Search stock using:")
 		print("1. Name")
 		print("2. Ticker")
 		print("3. Exit")
-		option = input("Your option: ")
+		option = input("Your option: ").lstrip()
 		if option == '1':
 			name()
 		elif option == '2':

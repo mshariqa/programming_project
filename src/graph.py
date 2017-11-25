@@ -5,10 +5,12 @@ from datetime import datetime, timedelta, date
 import numpy as np
 import matplotlib.pylab as plt
 from matplotlib.pylab import rcParams
+import utils
 
 def graph(companylist, comindex):
 	print("="*20,"Graph Screen","="*20)
 	while True:
+		utils.cls()
 		print("Select options:")
 		print("1. Last 7 days")
 		print("2. Last 1 month")
@@ -52,12 +54,12 @@ def graph(companylist, comindex):
 		print("3. Exit ")
 		option2 = input("Your option: ")
 		if option2 == '1':
-			N = input("Enter the window for moving averages")
+			N = input("Enter the window for moving averages : ")
 			ts = company_details['Close']
 			tsw = company_details['Volume']
 			break
 		elif option2 == '2':
-			N = input("Enter the window for moving averages")
+			N = input("Enter the window for moving averages : ")
 			ts = company_details['Volume']
 			tsw = company_details['Close']
 			break
@@ -71,9 +73,6 @@ def graph(companylist, comindex):
 	cur_date = datetime.strftime(cur_dte, '%Y-%m-%d')
 	from_dte = cur_dte - step
 	from_date = datetime.strftime(from_dte, '%Y-%m-%d')
-	print(from_date)
-	print(type(from_date))
-	print(cur_date)
 	ts = ts[from_date:cur_date]
 	tsw = tsw[from_date:cur_date]
 	N = int(N)
@@ -83,26 +82,25 @@ def graph(companylist, comindex):
 	wrolmean = wrolfun(ts,tsw,from_dte,cur_dte, N)
 	#Calculate macd
 	px = pd.DataFrame(columns=['26 ema','12 ema','MACD'])
-	px['26 ema'] = pd.ewma(ts, span = 26)
-	px['12 ema'] = pd.ewma(ts, span = 12)
+	px['26 ema'] = pd.Series.ewm(ts, span = 26).mean()
+	px['12 ema'] = pd.Series.ewm(ts, span = 12).mean()
 	px['MACD'] = px['12 ema'] - px['26 ema']
 	plt.figure(1)
 	plt.subplot(211)
 	plt.plot(ts, color='blue',label='Original')
 	plt.plot(rolmean, color='red',label='Rolling Mean')
 	plt.plot(wrolmean['Time'],wrolmean['Roll'], color='green',label='Weighted Rolling Mean')
-	print(wrolmean)
 	if option2 == 1:
 		plt.ylabel('Price')
 	elif option2 == 2:
 		plt.ylabel('Volume')
 	plt.xlabel('Time')
 	plt.legend(loc='best')
-	plt.title('Rolling Mean & Standard Deviation')
+	plt.title('Time Series plot')
 	plt.figure(1)
 	plt.subplot(212)
 	plt.plot(rolstd, color='black',label='Rolling Standard')
-	plt.plot(px['MACD'], color='green',label='Weighted Rolling Mean')
+	plt.plot(px['MACD'], color='green',label='MACD')
 	plt.show()
 
 def wavg(d, w):
