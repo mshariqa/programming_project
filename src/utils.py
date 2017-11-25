@@ -1,8 +1,11 @@
+#Author: Isha Srivastava
+
 from datetime import datetime, timedelta, date
 import subprocess as sp
 
 def cls():
   tmp = sp.call('cls',shell = True)
+
 
 def get_date():
     while True:
@@ -33,7 +36,7 @@ def get_date():
 
         except ValueError:
            print("Invalid format")
-           
+
     return from_dte, to_dte
 
 def check_date_after():
