@@ -10,6 +10,7 @@ import utils
 def prediction(companylist,comindex):
 	utils.cls()
 	print("="*20,"Prediction Screen","="*20)
+	print("\n\n")
 	tickerName = companylist.iloc[int(comindex)].Symbol
 	company_details = pd.read_csv("https://www.google.com/finance/historical?output=csv&q={}".format(tickerName))
 	from_dte, to_dte = utils.get_date()
