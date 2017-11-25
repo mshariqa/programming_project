@@ -11,7 +11,7 @@ from prediction import prediction
 import utils
 
 def menu2(companylist,comindex):
-	utils.cls()	
+	utils.cls()
 	print("="*26, "You selected", "="*26)
 	print((companylist.iloc[int(comindex)]))
 	loop = True
