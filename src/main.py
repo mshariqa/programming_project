@@ -1,7 +1,7 @@
-#programming project
-#Isha Srivastava-1720133
-#Mohammad Shariq Azam-17202383
+#Stock program
 #Aman Thakur-17200128
+#Isha Srivastava-17200133
+#Mohammad Shariq Azam-17202383
 
 import pandas as pd
 from summary import summary
