@@ -1,5 +1,8 @@
 from datetime import datetime, timedelta, date
-#import pandas as pd
+import subprocess as sp
+
+def cls():
+  tmp = sp.call('cls',shell = True)
 
 def get_date():
     while True:

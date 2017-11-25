@@ -1,7 +1,6 @@
 import utils
 import pandas as pd
 from datetime import datetime, timedelta, date
-#from main import menu, menu2
 
 def summary(step, company_details):
     df2 = pd.DataFrame()
@@ -45,6 +44,7 @@ def summary_monthly(company_details):
 def freq_menu(company_details):
     loop = True
     while loop:
+        utils.cls()
         print("Please enter the Frequecy option for viewing Historical Data:")
         print("1. Daily")
         print("2. Weekly")

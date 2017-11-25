@@ -1,15 +1,6 @@
 import pandas as pd
-#from summary import summary
-#from graph import graph
-#from historicaldata import historicaldata
-#from prediction import prediction
 import subprocess as sp
-
-#Integrate from main.py later
-#comindex = 419
-#companylist = pd.read_csv("http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchan0ge=nasdaq&render=download")
-#companydata = pd.read_csv("https://www.google.com/finance/historical?output=csv&q=" + str(companylist.at[comindex,'Symbol']))
-
+import utils
 
 def mean_price(n, companydata):
     av = 0
@@ -30,7 +21,6 @@ def summary(companylist, comindex):
 
     tickerName = companylist.iloc[int(comindex)].Symbol
     companydata = pd.read_csv("https://www.google.com/finance/historical?output=csv&q=" + str(tickerName))
-
     print("Stock Summary:")
 
     today_open = companydata.at[0,'Open']
@@ -61,3 +51,5 @@ def summary(companylist, comindex):
     print("Range of Closing Price (Annual): " + str(companydata['Close'].max() - companydata['Close'].min()))
     print("Standard Deviation in Close Price (Annual): " + str(std_dev(companydata)))
     print("Coefficient of Variation (Annual): " + str(std_dev(companydata)/mean_price(len(companydata['Close']), companydata)))
+    input("\nPress any key to continue to previous menu : ")
+    utils.cls()
