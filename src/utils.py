@@ -25,7 +25,6 @@ def get_date():
     while True:
         try:
            to_date = datetime.strptime(input("\nPlease enter the To date in format dd-mon-yy. ie 20-Feb-17  : "),'%d-%b-%y')
-           print("\n")
            cur_date =  datetime.strptime(str(date.today()),'%Y-%m-%d')
            if to_date > cur_date:
                print("\nTo date cannot be greater than today's date.")
@@ -43,7 +42,7 @@ def get_date():
 def check_date_after():
     while True:
         try:
-            pred_date = datetime.strptime(input("Please enter the prediction date in format dd-mon-yy. ie 20-Feb-18: "),'%d-%b-%y')
+            pred_date = datetime.strptime(input("\nPlease enter the prediction date in format dd-mon-yy. ie 20-Feb-18: "),'%d-%b-%y')
             cur_date =  datetime.strptime(str(date.today()),'%Y-%m-%d')
             if pred_date < cur_date:
                 print("\nPrediction date cannot be before today's date.")
