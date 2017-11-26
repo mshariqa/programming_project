@@ -4,14 +4,13 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
 import matplotlib.pyplot as plt
 import utils
 
-def prediction(companylist,comindex):
+def prediction(company_details):
 	utils.cls()
 	print("\n"+"="*23+"Prediction Screen"+"="*23)
-	tickerName = companylist.iloc[int(comindex)].Symbol
-	company_details = pd.read_csv("https://www.google.com/finance/historical?output=csv&q={}".format(tickerName))
 	#get the value of from and to date from user
 	from_dte, to_dte = utils.get_date()
 	#intialized step as single day
@@ -21,10 +20,10 @@ def prediction(companylist,comindex):
 	y_train = np.array([])
 	while(from_dte <= to_dte):
 		from_date=datetime.strftime(from_dte, '%d-%b-%y')
-		df = company_details[company_details['Date'].str.match(from_date, case=False)]
-		if(len(df)):
-			X_train = np.append(X_train,datetime.strptime(df.Date.values[0], '%d-%b-%y').toordinal())
-			y_train = np.append(y_train,df.Close.values[0])
+		elem = company_details[company_details['Date'].str.match(from_date, case=False)]
+		if(len(elem)):
+			X_train = np.append(X_train,datetime.strptime(elem.Date.values[0], '%d-%b-%y').toordinal())
+			y_train = np.append(y_train,elem.Close.values[0])
 		from_dte += step
 	n = len(X_train)
 	X_train = np.reshape(X_train,(n,1))
@@ -32,9 +31,15 @@ def prediction(companylist,comindex):
 	regressor = LinearRegression()
 	regressor.fit(X_train, y_train)
 
+	#Calculating RMSE
+	RMSE = mean_squared_error(y_train, regressor.predict(X_train))
+	R2 = r2_score(y_train, regressor.predict(X_train))
+	#Ploting the graph for scattered training data and linear regression line
 	plt.plot_date(X_train, y_train, color = 'red')
+	plt.figtext(0.2, 0.8, 'RMSE : {0:.2f}'.format(RMSE), fontsize=14, weight = 'bold', color = 'purple')
+	plt.figtext(0.2, 0.75,'R2      : {0:.2f}'.format(R2), fontsize=14, weight = 'bold', color = 'purple')
 	plt.plot(X_train, regressor.predict(X_train), color = 'blue')
-	plt.title('Time vs Price (Training set)')
+	plt.title('Time vs Price (Trend)')
 	plt.xlabel('Time')
 	plt.ylabel('price')
 	plt.show()

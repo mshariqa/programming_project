@@ -62,8 +62,8 @@ def graph(companylist, comindex):
 		try: 
 			if option2 == '1':
 				N = input("\nEnter the window in integer for moving averages : ")
-				if int(N) < 2:
-					print("\nWindow should be more than or equal to 2")
+				if int(N) < 2 or int(N) > int(step.days):
+					print("\nWindow should be less than 2 or more than the selected time period")
 				else:
 					ts = company_details['Close']
 					tsw = company_details['Volume']
@@ -71,7 +71,7 @@ def graph(companylist, comindex):
 			elif option2 == '2':
 				N = input("\nEnter the window in integer for moving averages : ")
 				if int(N) < 2:
-					print("\nWindow should be more than or equal to 2")
+					print("\nWindow should be less than 2 or more than the selected time period")
 				else:
 					ts = company_details['Volume']
 					tsw = company_details['Close']
