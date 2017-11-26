@@ -20,7 +20,7 @@ def menu2(companydata,companylist,comindex):
 	loop = True
 	while loop:
 		print("\n"+"="*25+"Stock Options"+"="*25)
-		print("\nSelect options:")
+		print("\nSelect options (1-6):")
 		print("1. Summary")
 		print("2. Graph")
 		print("3. Historical Data")
@@ -54,7 +54,7 @@ def name():
 	while(outlen > 20 or outlen < 1):
 		if outlen < 1:
 			print("\nNo result found. Please try again ...")
-			companyName = input("\nEnter the company name you want to search: ").lstrip()
+			companyName = input("\nEnter the company name you want to search     : ").lstrip()
 			outlen = len(companylist[companylist['Name'].str.contains(str(companyName),case = False)])
 		elif outlen > 20:
 			print("\nThe matching patterns are more than 20. Please enter more characters...")
@@ -122,11 +122,11 @@ def menu():
 	loop = True
 	while loop:
 		print("="*20+"Welcome"+"="*20)
-		print("\nSearch stock using:")
+		print("\nSearch stock using options (1-3):")
 		print("1. Name")
 		print("2. Ticker")
 		print("3. Exit")
-		option = input("\nYour option       : ").lstrip()
+		option = input("\nYour option                     : ").lstrip()
 		if option == '1':
 			name()
 		elif option == '2':

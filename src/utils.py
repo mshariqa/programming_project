@@ -19,7 +19,7 @@ def get_date():
               break
 
         except ValueError:
-            print("\nInvalid date: Please try again ...")
+            print("\nInvalid date or format: Please try again ...")
 
 
     while True:
@@ -34,7 +34,7 @@ def get_date():
              break
 
         except ValueError:
-           print("\nInvalid date: Please try again ...")
+           print("\nInvalid date or format: Please try again ...")
 
     return from_date, to_date
 
@@ -50,5 +50,5 @@ def check_date_after():
               break
 
         except ValueError:
-               print("\nInvalid date: Please try again ...")
+               print("\nInvalid date or format: Please try again ...")
     return pred_date
