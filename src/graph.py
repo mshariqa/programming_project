@@ -11,7 +11,7 @@ def graph(companylist, comindex):
 	print("="*20,"Graph Screen","="*20)
 	while True:
 		utils.cls()
-		print("\nSelect option:")
+		print("\nSelect option (1-7):")
 		print("1. Last 7 days")
 		print("2. Last 1 month")
 		print("3. Last 3 months")
@@ -41,7 +41,8 @@ def graph(companylist, comindex):
 			print("\nThanks for coming. Please visit again ...")
 			exit()
 		else:
-			print("\nWrong option. Try again ...")
+			print()
+			input("\nWrong option."+" Press Enter to continue...")
 
 	tickerName = companylist.iloc[int(comindex)].Symbol
 	#Function to parse and covert date from string to datetime for time series
@@ -54,12 +55,12 @@ def graph(companylist, comindex):
 	print("\n")
 	print("="*20,"Time series option(Price/Volume)","="*20)
 	while True:
-		print("\nSelect options for time series: ")
+		print("\nSelect options for time series (1-3): ")
 		print("1. Time series for close price ")
 		print("2. Time series for volume ")
 		print("3. Exit ")
 		option2 = input("\nYour option                                     : ")
-		try: 
+		try:
 			if option2 == '1':
 				N = input("\nEnter the window in integer for moving averages : ")
 				if int(N) < 2 or int(N) > int(step.days):
@@ -70,7 +71,7 @@ def graph(companylist, comindex):
 					break
 			elif option2 == '2':
 				N = input("\nEnter the window in integer for moving averages : ")
-				if int(N) < 2:
+				if int(N) < 2 or int(N) > int(step.days):
 					print("\nWindow should be less than 2 or more than the selected time period")
 				else:
 					ts = company_details['Volume']
@@ -86,7 +87,7 @@ def graph(companylist, comindex):
 
 	cur_dte = date.today()
 	#converting date from datetime to string
-	cur_date = datetime.strftime(cur_dte, '%Y-%m-%d')
+	cur_date = datetime.strftime(date.today(), '%Y-%m-%d')
 	#from date = current date - step
 	from_dte = cur_dte - step
 	#converting date from datetime to string
@@ -107,7 +108,7 @@ def graph(companylist, comindex):
 	plt.subplot(211)
 	plt.plot(ts, color='blue',label='Original')
 	plt.plot(rolmean, color='red',label='Rolling Mean')
-	plt.plot(wrolmean['Time'],wrolmean['Roll'], color='green',label='Weighted Rolling Mean')	
+	plt.plot(wrolmean['Time'],wrolmean['Roll'], color='green',label='Weighted Rolling Mean')
 	if option2 == '1':
 		plt.title('Time Series plot for price')
 		plt.ylabel('Price')
@@ -138,7 +139,7 @@ def wavg(d, w):
 #This function calculates the weighted rolling mean
 def wrolfun(ts,tsw, from_dte, cur_dte,N):
 	wrolmean = pd.DataFrame(columns=['Time','Roll'])
-	step = timedelta(days=N)	
+	step = timedelta(days=N)
 	timeSeries = np.array([])
 	while(from_dte + timedelta(days=N) <= cur_dte):
 		from_date = datetime.strftime(from_dte, '%Y-%m-%d')
