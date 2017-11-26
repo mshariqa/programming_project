@@ -15,11 +15,12 @@ def get_date():
             cur_dte =  datetime.strptime(str(date.today()),'%Y-%m-%d')
             if from_dte > cur_dte:
                 print("\nFrom date cannot be greater than today's date.")
+
             else:
               break
 
         except ValueError:
-               print("\nInvalid format")
+            print("\nInvalid date: Please try again ...")
 
 
     while True:
@@ -36,7 +37,7 @@ def get_date():
              break
 
         except ValueError:
-           print("\nInvalid format")
+           print("\nInvalid date: Please try again ...")
 
     return from_dte, to_dte
 
@@ -53,5 +54,5 @@ def check_date_after():
               break
 
         except ValueError:
-               print("\nInvalid format: Please try again ...")
+               print("\nInvalid date: Please try again ...")
     return pred_dte
