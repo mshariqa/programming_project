@@ -14,6 +14,7 @@ companylist = pd.read_csv("http://www.nasdaq.com/screening/companies-by-name.asp
 
 def menu2(companydata,companylist,comindex):
 	utils.cls()	
+
 	print("="*26, "You selected", "="*26)
 	print((companylist.iloc[int(comindex)]))
 	loop = True

@@ -4,6 +4,7 @@ import utils
 import pandas as pd
 from datetime import datetime, timedelta, date
 
+# This function displays the historical data within the date range given by the user
 def summary(step, company_details):
     hist_data = pd.DataFrame()
     from_dte,to_dte= utils.get_date()
@@ -21,6 +22,7 @@ def summary(step, company_details):
     else:
         print("="*20+"History"+"="*20+"\n\n"+str(hist_data)+"\n\n"+"="*48)
 
+# This function displays the historical  on monthly frequency basis within the date range given by the user
 def summary_monthly(company_details):
     hist_data = pd.DataFrame()
     month_summary = pd.DataFrame()
@@ -44,6 +46,7 @@ def summary_monthly(company_details):
     else:
         print("="*16+"Monthly history"+"="*16+"\n\n"+str(month_summary)+"\n\n"+"="*47)
 
+# This function is used for printing the menu for frequency of data retreival
 def historicaldata(company_details):
     loop = True
     utils.cls()
