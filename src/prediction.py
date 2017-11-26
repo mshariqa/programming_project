@@ -7,11 +7,9 @@ from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 import utils
 
-def prediction(companylist,comindex):
+def prediction(company_details):
 	utils.cls()
 	print("\n"+"="*23+"Prediction Screen"+"="*23)
-	tickerName = companylist.iloc[int(comindex)].Symbol
-	company_details = pd.read_csv("https://www.google.com/finance/historical?output=csv&q={}".format(tickerName))
 	#get the value of from and to date from user
 	from_dte, to_dte = utils.get_date()
 	#intialized step as single day

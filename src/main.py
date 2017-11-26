@@ -10,7 +10,9 @@ from historicaldata import historicaldata
 from prediction import prediction
 import utils
 
-def menu2(companylist,comindex):
+companylist = pd.read_csv("http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchan0ge=nasdaq&render=download")
+
+def menu2(companydata,companylist,comindex):
 	utils.cls()	
 	print("="*26, "You selected", "="*26)
 	print((companylist.iloc[int(comindex)]))
@@ -26,13 +28,13 @@ def menu2(companylist,comindex):
 		print("6. Exit")
 		option = input("\nYour option:                                ").lstrip()
 		if option == '1':
-			summary(companylist,comindex)
+			summary(companydata)
 		elif option == '2':
 			graph(companylist,comindex),
 		elif option == '3':
-			historicaldata(companylist,comindex),
+			historicaldata(companydata),
 		elif option == '4':
-			prediction(companylist,comindex),
+			prediction(companydata),
 		elif option == '5':
 			menu()
 		elif option == '6':
@@ -45,7 +47,6 @@ def menu2(companylist,comindex):
 
 def name():
 	utils.cls()
-	companylist = pd.read_csv("http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchan0ge=nasdaq&render=download")
 	companyName = input("\nEnter the company name you want to search     : ").lstrip()
 	outlen = len(companylist[companylist['Name'].str.contains(companyName,case = False)])
 
@@ -68,7 +69,9 @@ def name():
 			comindex = int(input("\nEnter the index number of the company you want: ").lstrip())
 			if temp_match.index.contains(comindex):
 				loop = False
-				menu2(companylist,comindex)
+				tickerName = companylist.iloc[int(comindex)].Symbol
+				companydata = pd.read_csv("https://www.google.com/finance/historical?output=csv&q=" + str(tickerName))       
+				menu2(companydata,companylist,comindex)
 			else:
 				print("\nThe name you have entered is not found. Please try again...")
 
@@ -77,7 +80,6 @@ def name():
 
 def ticker():
 	utils.cls()
-	companylist = pd.read_csv("http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchan0ge=nasdaq&render=download")
 	companyTicker = input("\nEnter the company ticker you want to search: ").lstrip()
 	matchTicker = companylist[companylist['Symbol'].str.contains(companyTicker,case = False)]
 	outlen = len(matchTicker)
@@ -103,14 +105,14 @@ def ticker():
 			comindex = int(input("\nEnter the index number of the company you want: ").lstrip())
 			if temp_match.index.contains(comindex):
 				loop = False
-				menu2(companylist,comindex)
+				tickerName = companylist.iloc[int(comindex)].Symbol
+				companydata = pd.read_csv("https://www.google.com/finance/historical?output=csv&q=" + str(tickerName))
+				menu2(companydata,companylist,comindex)
 			else:
 				print("\nThe ticker you have entered is not found. Please try again...")
 
 		except ValueError:
 			print("\nIncorrect Index Value! Please try again ... ")
-
-
 
 def menu():
 	utils.cls()

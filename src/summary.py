@@ -18,10 +18,8 @@ def std_dev(companydata):
     ssd = sum(sq_diff)    
     return (ssd/num_items)**(1/2)    
 
-def summary(companylist, comindex):
+def summary(companydata):
 
-    tickerName = companylist.iloc[int(comindex)].Symbol  
-    companydata = pd.read_csv("https://www.google.com/finance/historical?output=csv&q=" + str(tickerName))       
     print("*"*80 + "\nStock Summary:                              ")    
     today_open = companydata.at[0,'Open']
     print("Yesterday's Open Price:                     " + str(today_open))   

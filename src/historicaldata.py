@@ -72,7 +72,5 @@ def freq_menu(company_details):
         else:
             print("Wrong option. Try again...\n")
 
-def historicaldata(companylist,comindex):
-    ticker = companylist.iloc[int(comindex)].Symbol
-    company_details = pd.read_csv("https://www.google.com/finance/historical?output=csv&q={}".format(ticker))
+def historicaldata(company_details):
     freq_menu(company_details)
