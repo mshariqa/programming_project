@@ -62,6 +62,7 @@ def name():
 			outlen = len(companylist[companylist['Name'].str.contains(companyName,case = False)])
 
 	temp_match = companylist[companylist['Name'].str.contains(companyName,case = False)]
+	temp_match.index.name='Index'
 	print("\n"+str(temp_match.loc[:,'Symbol':'Name']))
 
 	loop = True
@@ -98,6 +99,7 @@ def ticker():
 			outlen = len(matchTicker)
 
 	temp_match = companylist[companylist['Symbol'].str.contains(companyTicker,case = False)]
+	temp_match.index.name='Index'
 	print("\n"+str(temp_match.loc[:,'Symbol':'Name']))
 
 	loop = True
