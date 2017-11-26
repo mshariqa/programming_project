@@ -5,44 +5,46 @@ import pandas as pd
 from datetime import datetime, timedelta, date
 
 def summary(step, company_details):
-    df2 = pd.DataFrame()
+    hist_data = pd.DataFrame()
     from_dte,to_dte= utils.get_date()
     while(from_dte <= to_dte):
         from_date=datetime.strftime(from_dte, '%#d-%b-%y')
-        df = company_details[company_details['Date'].str.match(from_date, case=False)]
-        df2 = df2.append(df)
-        df2 = df2.reset_index(drop=True)
+        hist_data = hist_data.append(company_details[company_details['Date'].str.match(from_date, case=False)])
+        hist_data = hist_data.reset_index(drop=True)
         from_dte += step[0]
-    if len(df2) < 1:
+    to_date=datetime.strftime(to_dte, '%#d-%b-%y')
+    if not len(hist_data[hist_data['Date'].str.match(to_date, case=False)]):
+        hist_data = hist_data.append(company_details[company_details['Date'].str.match(to_date, case=False)])
+        hist_data = hist_data.reset_index(drop=True)
+    if len(hist_data) < 1:
         print ("Sorry! No results found for the given date range.\n")
     else:
-        print("="*20+"History"+"="*20+"\n\n"+str(df2)+"\n\n"+"="*48)
+        print("="*20+"History"+"="*20+"\n\n"+str(hist_data)+"\n\n"+"="*48)
 
 def summary_monthly(company_details):
-    df2 = pd.DataFrame()
-    df_summary = pd.DataFrame()
+    hist_data = pd.DataFrame()
+    month_summary = pd.DataFrame()
     step = timedelta(days=1)
     from_dte,to_dte = utils.get_date()
     while(from_dte <= to_dte):
         from_date=datetime.strftime(from_dte, '%#d-%b-%y')
-        df = company_details[company_details['Date'].str.match(from_date, case=False)]
-        df2 = df2.append(df)
+        hist_data = hist_data.append(company_details[company_details['Date'].str.match(from_date, case=False)])
         from_dte += step
-    df2 = df2[::-1]
-    df2 = df2.reset_index(drop=True)
-    df_summary = df2.head(1)
-    for i in range (len(df2)-1):
-        date = datetime.strptime(df2.loc[i][0], '%d-%b-%y')
-        next_date = datetime.strptime(df2.loc[i+1][0], '%d-%b-%y')
+    hist_data = hist_data[::-1]
+    hist_data = hist_data.reset_index(drop=True)
+    month_summary = hist_data.head(1)
+    for i in range (len(hist_data)-1):
+        date = datetime.strptime(hist_data.loc[i][0], '%d-%b-%y')
+        next_date = datetime.strptime(hist_data.loc[i+1][0], '%d-%b-%y')
         if (date.month != next_date.month):
-            df_summary = df_summary.append(df2.loc[i+1])
-    df_summary = df_summary.reset_index(drop=True)
-    if len(df_summary) < 1:
+            month_summary = month_summary.append(hist_data.loc[i+1])
+    month_summary = month_summary.reset_index(drop=True)
+    if len(month_summary) < 1:
         print ("Sorry! No results found for the given date range.\n")
     else:
-        print("="*16+"Monthly history"+"="*16+"\n\n"+str(df_summary)+"\n\n"+"="*47)
+        print("="*16+"Monthly history"+"="*16+"\n\n"+str(month_summary)+"\n\n"+"="*47)
 
-def freq_menu(company_details):
+def historicaldata(company_details):
     loop = True
     utils.cls()
     while loop:
@@ -71,6 +73,3 @@ def freq_menu(company_details):
             exit()
         else:
             print("Wrong option. Try again...\n")
-
-def historicaldata(company_details):
-    freq_menu(company_details)
