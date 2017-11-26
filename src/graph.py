@@ -41,7 +41,6 @@ def graph(companylist, comindex):
 			print("\nThanks for coming. Please visit again ...")
 			exit()
 		else:
-			print()
 			input("\nWrong option."+" Press Enter to continue...")
 
 	tickerName = companylist.iloc[int(comindex)].Symbol
@@ -87,7 +86,7 @@ def graph(companylist, comindex):
 
 	cur_dte = date.today()
 	#converting date from datetime to string
-	cur_date = datetime.strftime(date.today(), '%Y-%m-%d')
+	cur_date = datetime.strftime(cur_dte, '%Y-%m-%d')
 	#from date = current date - step
 	from_dte = cur_dte - step
 	#converting date from datetime to string
