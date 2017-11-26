@@ -13,7 +13,7 @@ import utils
 companylist = pd.read_csv("http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchan0ge=nasdaq&render=download")
 
 def menu2(companydata,companylist,comindex):
-	utils.cls()	
+	utils.cls()
 
 	print("="*26, "You selected", "="*26)
 	print((companylist.iloc[int(comindex)]))
@@ -54,7 +54,7 @@ def name():
 	while(outlen > 20 or outlen < 1):
 		if outlen < 1:
 			print("\nNo result found. Please try again ...")
-			companyName = input("Enter the company name you want to search: ").lstrip()
+			companyName = input("\nEnter the company name you want to search: ").lstrip()
 			outlen = len(companylist[companylist['Name'].str.contains(str(companyName),case = False)])
 		elif outlen > 20:
 			print("\nThe matching patterns are more than 20. Please enter more characters...")
@@ -62,7 +62,7 @@ def name():
 			outlen = len(companylist[companylist['Name'].str.contains(companyName,case = False)])
 
 	temp_match = companylist[companylist['Name'].str.contains(companyName,case = False)]
-	print(temp_match.loc[:,'Symbol':'Name'])
+	print("\n"+str(temp_match.loc[:,'Symbol':'Name']))
 
 	loop = True
 	while loop:
@@ -71,7 +71,7 @@ def name():
 			if temp_match.index.contains(comindex):
 				loop = False
 				tickerName = companylist.iloc[int(comindex)].Symbol
-				companydata = pd.read_csv("https://www.google.com/finance/historical?output=csv&q=" + str(tickerName))       
+				companydata = pd.read_csv("https://www.google.com/finance/historical?output=csv&q=" + str(tickerName))
 				menu2(companydata,companylist,comindex)
 			else:
 				print("\nThe name you have entered is not found. Please try again...")
@@ -88,7 +88,7 @@ def ticker():
 	while(outlen > 20 or outlen < 1):
 		if outlen < 1:
 			print("\nNo result found. Please try again ...")
-			companyTicker = input("Enter the company ticker you want to search: ").lstrip()
+			companyTicker = input("\nEnter the company ticker you want to search: ").lstrip()
 			matchTicker = companylist[companylist['Symbol'].str.contains(companyTicker,case = False)]
 			outlen = len(matchTicker)
 		elif outlen > 20:
@@ -98,7 +98,7 @@ def ticker():
 			outlen = len(matchTicker)
 
 	temp_match = companylist[companylist['Symbol'].str.contains(companyTicker,case = False)]
-	print(temp_match.loc[:,'Symbol':'Name'])
+	print("\n"+str(temp_match.loc[:,'Symbol':'Name']))
 
 	loop = True
 	while loop:
