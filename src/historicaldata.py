@@ -20,7 +20,7 @@ def summary(step, company_details):
     if len(hist_data) < 1:
         print ("Sorry! No results found for the given date range.\n")
     else:
-        print("="*20+"History"+"="*20+"\n\n"+str(hist_data)+"\n\n"+"="*48)
+        print("\n"+"="*21+"History"+"="*21+"\n\n"+str(hist_data)+"\n\n"+"="*49)
 
 # This function displays the historical  on monthly frequency basis within the date range given by the user
 def summary_monthly(company_details):
@@ -44,7 +44,7 @@ def summary_monthly(company_details):
     if len(month_summary) < 1:
         print ("Sorry! No results found for the given date range.\n")
     else:
-        print("="*16+"Monthly history"+"="*16+"\n\n"+str(month_summary)+"\n\n"+"="*47)
+        print("\n"+"="*18+"Monthly history"+"="*18+"\n\n"+str(month_summary)+"\n\n"+"="*51)
 
 # This function is used for printing the menu for frequency of data retreival
 def historicaldata(company_details):
