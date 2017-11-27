@@ -37,7 +37,7 @@ def prediction(company_details):
 	polyregressor.fit(X_poly, y_train)
 	plt.plot(X_train, polyregressor.predict(poly_reg.fit_transform(X_train)), color = 'green', label='Polynomial Linear Regression')
 
-	#Training linear regression using X_train and y_train 
+	#Training linear regression using X_train and y_train
 	regressor = LinearRegression()
 	regressor.fit(X_train, y_train)
 
@@ -47,7 +47,7 @@ def prediction(company_details):
 
 	#Calculating RMSE
 	RMSE = mean_squared_error(y_train, regressor.predict(X_train))
-	R2 = r2_score(y_train, regressor.predict(X_train))	
+	R2 = r2_score(y_train, regressor.predict(X_train))
 
 	#Ploting the graph for scattered training data and linear regression line
 	plt.plot_date(X_train, y_train, color = 'red')
@@ -70,7 +70,7 @@ def prediction(company_details):
 		plt.show()
 
 	try:
-		X_test = utils.check_date_after().toordinal() 
+		X_test = utils.check_date_after().toordinal()
 		y_predlin = regressor.predict(X_test)
 		y_predpoly = polyregressor.predict(poly_reg.fit_transform(X_test))
 
@@ -78,9 +78,9 @@ def prediction(company_details):
 			y_predlin = 0
 		if float(y_predpoly) < 0:
 			y_predpoly = 0
-			
+
 		print("\nThe linear regression predicted price for this date is            : {}".format(y_predlin[0]))
-		print("\nThe polynomila linear regression predicted price for this date is : {}".format(y_predpoly[0]))
-	
+		print("\nThe polynomial linear regression predicted price for this date is : {}".format(y_predpoly[0]))
+
 	except ValueError:
-		print("\nEntered value is not in format dd-mmm-yy. Please try again ... ")
+		print("\nEntered date is not in format dd-mmm-yy. Please try again ... ")
