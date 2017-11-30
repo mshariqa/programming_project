@@ -72,7 +72,7 @@ def name():
 			if temp_match.index.contains(comindex):
 				loop = False
 				tickerName = companylist.iloc[int(comindex)].Symbol
-				companydata = pd.read_csv("https://www.google.com/finance/historical?output=csv&q=" + str(tickerName))
+				companydata = pd.read_csv("http://finance.google.com/finance/historical?q={}&num=30&ei=NGoQWtDQFMGKUIuSsYgF&output=csv".format(tickerName))
 				menu2(companydata,companylist,comindex)
 			else:
 				print("\nThe name you have entered is not found. Please try again...")
@@ -109,7 +109,7 @@ def ticker():
 			if temp_match.index.contains(comindex):
 				loop = False
 				tickerName = companylist.iloc[int(comindex)].Symbol
-				companydata = pd.read_csv("https://www.google.com/finance/historical?output=csv&q=" + str(tickerName))
+				companydata = pd.read_csv("http://finance.google.com/finance/historical?q={}&num=30&ei=NGoQWtDQFMGKUIuSsYgF&output=csv".format(tickerName))
 				menu2(companydata,companylist,comindex)
 			else:
 				print("\nThe ticker you have entered is not found. Please try again...")

@@ -47,8 +47,8 @@ def graph(companylist, comindex):
 	#Function to parse and covert date from string to datetime for time series
 	dateparse = lambda dates: pd.datetime.strptime(dates, '%d-%b-%y')
 	#Function to read csv file for time series with additional parameters for parsing date in datetime format
-	company_details = pd.read_csv("https://www.google.com/finance/historical?output=csv&q={}".format(tickerName), \
-		parse_dates=[0], index_col=[0],date_parser=dateparse)
+	company_details = pd.read_csv("http://finance.google.com/finance/historical?q={}&num=30&ei=NGoQWtDQFMGKUIuSsYgF&output=csv"\
+		.format(tickerName), parse_dates=[0], index_col=[0],date_parser=dateparse)
 	#Sorted the csv data in ascending order of date
 	company_details = company_details.sort_index(ascending=True)
 	print("\n")
